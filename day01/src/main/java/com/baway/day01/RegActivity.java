@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.baway.utils.PhoneFormatCheckedUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -71,12 +74,20 @@ public class RegActivity extends AppCompatActivity implements View.OnClickListen
                         okHttpClient.newCall(request).enqueue(new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
-                                Toast.makeText(RegActivity.this,"注册失败",Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
                             }
 
                             @Override
                             public void onResponse(Call call, Response response) throws IOException {
-                                Toast.makeText(RegActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
+                                try {
+                                    JSONObject object = new JSONObject(response.body().toString());
+                                    String str = object.optString("msg");
+                                    if (str.equals("注册成功")){
+                                        Log.i("sss",str);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 tiaoZhuan();
                             }
                         });
