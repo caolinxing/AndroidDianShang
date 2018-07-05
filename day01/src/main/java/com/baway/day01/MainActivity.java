@@ -82,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 JSONObject jsonObject = new JSONObject(response.body().string());
                                 String str = jsonObject.optString("msg");
                                 Log.i("sss",str);
+                                if (str.equals("登录成功")){
+                                    Intent intent = new Intent(MainActivity.this,GoodsActivity.class);
+                                    startActivity(intent);
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
